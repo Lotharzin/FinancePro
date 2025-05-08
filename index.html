@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FinancePro - Painel</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <script>
+    if (!localStorage.getItem("loggedUser")) {
+      location.href = "login.html";
+    }
+  </script>
+
+  <div class="container">
+    <header>
+      <h1>FinancePro</h1>
+      <nav>
+        <button onclick="togglePremium()">Plano Premium</button>
+      </nav>
+    </header>
+
+    <section id="dashboard">
+      <h2>Resumo Financeiro</h2>
+      <p><strong>Gastos Semanais:</strong> R$ <span id="weekly-expense">0,00</span></p>
+      <p><strong>Gastos Mensais:</strong> R$ <span id="monthly-expense">0,00</span></p>
+      <p><strong>Economia Estimada:</strong> R$ <span id="savings">0,00</span></p>
+    </section>
+
+    <section id="form-section">
+      <h2>Adicionar Transação</h2>
+      <form id="transaction-form">
+        <input type="text" id="description" placeholder="Descrição" required>
+        <input type="number" id="amount" placeholder="Valor (negativo = despesa)" required>
+        <input type="date" id="date" required>
+        <button type="submit">Registrar</button>
+      </form>
+    </section>
+
+    <section id="transactions">
+      <h2>Histórico de Transações</h2>
+      <ul id="transaction-list"></ul>
+    </section>
+
+    <section>
+      <h2>Gráfico de Gastos</h2>
+      <canvas id="expenseChart" width="400" height="200"></canvas>
+    </section>
+
+    <section>
+      <h2>Comparativo Mês a Mês</h2>
+      <canvas id="monthCompareChart" width="400" height="200"></canvas>
+    </section>
+
+    <section id="premium-section" class="hidden">
+      <h2>🔒 Premium - Dicas de Investimento</h2>
+      <div id="investment-tips">
+        <p>Ative o plano Premium para receber sugestões de investimentos com base nos seus gastos!</p>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
