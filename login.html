@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - FinancePro</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>FinancePro - Login</h1>
+    <form id="login-form">
+      <input type="text" id="username" placeholder="Usuário" required />
+      <input type="password" id="password" placeholder="Senha" required />
+      <button type="submit">Entrar</button>
+    </form>
+    <p>Não tem conta? <a href="#" onclick="toggleRegister()">Cadastre-se</a></p>
+
+    <form id="register-form" class="hidden">
+      <input type="text" id="new-username" placeholder="Novo usuário" required />
+      <input type="password" id="new-password" placeholder="Nova senha" required />
+      <button type="submit">Cadastrar</button>
+    </form>
+  </div>
+
+  <script>
+    const users = JSON.parse(localStorage.getItem("users")) || {};
+
+    document.getElementById("login-form").addEventListener("submit", e => {
+      e.preventDefault();
+      const user = document.getElementById("username").value;
+      const pass = document.getElementById("password").value;
+
+      if (users[user] && users[user].password === pass) {
+        localStorage.setItem("loggedUser", user);
+        location.href = "index.html";
+      } else {
+        alert("Usuário ou senha incorretos.");
+      }
+    });
+
+    document.getElementById("register-form").addEventListener("submit", e => {
+      e.preventDefault();
+      const user = document.getElementById("new-username").value;
+      const pass = document.getElementById("new-password").value;
+
+      if (users[user]) {
+        alert("Usuário já existe.");
+        return;
+      }
+
+      users[user] = { password: pass, transactions: [] };
+      localStorage.setItem("users", JSON.stringify(users));
+      alert("Usuário criado com sucesso. Faça login.");
+      toggleRegister();
+    });
+
+    function toggleRegister() {
+      document.getElementById("register-form").classList.toggle("hidden");
+    }
+  </script>
+</body>
+</html>
